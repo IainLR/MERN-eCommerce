@@ -19,7 +19,9 @@ const Header = () => {
       <Navbar bg='primary' variant='dark' expand='lg' collapseOnSelect>
         <Container>
           <LinkContainer to='/'>
-            <Navbar.Brand>SignalChain</Navbar.Brand>
+            <Navbar.Brand>
+              <i class='fas fa-compact-disc'></i>SignalChain
+            </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
