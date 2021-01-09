@@ -2,6 +2,7 @@
 // const dotenv = require('dotenv')
 // const products = require('./data/products')
 //above is common js, below is ES2015
+import path from 'path'
 import express from 'express'
 import dotenv from 'dotenv'
 import colors from 'colors'
@@ -11,6 +12,7 @@ import connectDB from './config/db.js'
 import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
+import uploadRoutes from './routes/uploadRoutes.js'
 
 dotenv.config()
 
@@ -27,11 +29,16 @@ app.get('/', (req, res) => {
 app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/orders', orderRoutes)
+app.use('/api/upload', uploadRoutes)
 
 //PayPal
 app.get('/api/config/paypal', (req, res) =>
   res.send(process.env.PAYPAL_CLIENT_ID)
 )
+
+//making the uploads folder static
+const __dirname = path.resolve()
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
 
 //error handling middleware - 404 error
 app.use(notFound)
