@@ -18,17 +18,24 @@ import {
   PRODUCT_CREATE_REVIEW_REQUEST,
   PRODUCT_CREATE_REVIEW_SUCCESS,
   PRODUCT_CREATE_REVIEW_FAIL,
+  PRODUCT_TOP_REQUEST,
+  PRODUCT_TOP_SUCCESS,
+  PRODUCT_TOP_FAIL,
 } from '../constants/productConstants'
 
 // functions much like a useEffect or componentDidMount
 // async (dispatch) is a perk of thunk
-export const listProducts = (searchTerm = '') => async (dispatch) => {
+export const listProducts = (searchTerm = '', pageNumber = '') => async (
+  dispatch
+) => {
   try {
     dispatch({
       type: PRODUCT_LIST_REQUEST,
     })
 
-    const { data } = await axios.get(`/api/products?keyword=${searchTerm}`)
+    const { data } = await axios.get(
+      `/api/products?keyword=${searchTerm}&pageNumber=${pageNumber}`
+    )
 
     dispatch({
       type: PRODUCT_LIST_SUCCESS,
@@ -200,6 +207,29 @@ export const createReview = (productId, review) => async (
   } catch (error) {
     dispatch({
       type: PRODUCT_CREATE_REVIEW_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+export const listTopProducts = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: PRODUCT_TOP_REQUEST,
+    })
+
+    const { data } = await axios.get(`/api/products/top`)
+
+    dispatch({
+      type: PRODUCT_TOP_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_TOP_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
