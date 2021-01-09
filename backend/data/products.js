@@ -32,7 +32,7 @@ const products = [
     category: 'Modulation',
     price: 229.99,
     countInStock: 5,
-    rating: 3,
+    rating: 4.5,
     numReviews: 12,
   },
   {
@@ -56,7 +56,7 @@ const products = [
     category: 'Octave',
     price: 213.99,
     countInStock: 7,
-    rating: 3.5,
+    rating: 4.0,
     numReviews: 10,
   },
   {
