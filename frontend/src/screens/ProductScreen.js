@@ -4,7 +4,10 @@ import { Link } from 'react-router-dom'
 import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap'
 import Rating from '../components/Rating'
 import { listProductDetails, createReview } from '../actions/productActions'
-import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
+import {
+  PRODUCT_CREATE_REVIEW_RESET,
+  PRODUCT_DETAILS_RESET,
+} from '../constants/productConstants'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import Meta from '../components/Meta'
@@ -37,6 +40,11 @@ const ProductScreen = ({ history, match }) => {
     }
 
     dispatch(listProductDetails(match.params.id))
+
+    //this is our unmount, will ensure smooth transition between product pages
+    return function cleanUp() {
+      dispatch({ type: PRODUCT_DETAILS_RESET })
+    }
   }, [match, dispatch, successReviewCreate])
 
   const handleAddToCart = () => {
@@ -56,7 +64,12 @@ const ProductScreen = ({ history, match }) => {
 
   return (
     <>
-      <Link className='btn btn-light my-3' to='/'>
+      <Link
+        className='btn btn-light my-3'
+        to='/'
+        //resets product details in state to prevent flash of previous details
+        onClick={() => dispatch({ type: PRODUCT_DETAILS_RESET })}
+      >
         Go Back
       </Link>
       {loading ? (

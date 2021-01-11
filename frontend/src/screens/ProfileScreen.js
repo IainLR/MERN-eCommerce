@@ -40,6 +40,8 @@ const ProfileScreen = ({ history, location }) => {
       } else {
         setName(user.name)
         setEmail(user.email)
+        //test to update orders after edit
+        // dispatch(listMyOrders())
       }
     }
   }, [dispatch, history, userInfo, user, success])
